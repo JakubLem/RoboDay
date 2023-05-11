@@ -100,12 +100,6 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     // Współrzędne pikseli <0,1>
     vec2 uv = fragCoord/iResolution.xy;
-    
-    // zwiększanie współrzędniej x powoduje ruch ciężarówki
-    // usuń komentarze z poniższych linijek aby zaobserwować ruch
-    //uv.x +=iTime;
-    //float count = 1.0;
-    //uv.x = fract(uv.x * count);
 
     // Stosunek długości do wysokości wyświetlacza
     float ratio = iResolution.x/iResolution.y;
@@ -113,43 +107,15 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Przeskalowanie osi X "rozciąga" oś X na cały wyświetlacz
     uv.x *= ratio;
     
-   
-    // TU ZMIENIAJ WARTOŚCI promien I srodekKola
-    // Rysowanie kół
-    float promien = 0.1;
-    vec2 srodekKola1 = vec2(0.1, 0.8);
-    float inCircle1 = circle(uv,srodekKola1,promien);
-    
-    vec2 srodekKola2 = vec2(0.5, 0.8);
-    float inCircle2 = circle(uv,srodekKola2,promien);
-    
-    // Rysowanie kwadratów
-    vec2 rectSize1 = vec2(0.9,0.1);
-    vec2 rectCenter1 = vec2(0.5,0.3);
+    // Rysowanie kwadratu
+    vec2 rectSize1 = vec2(0.5,0.5);
+    vec2 rectCenter1 = vec2(0.5,0.5);
     float inRect1 = rectangle(uv,rectSize1,rectCenter1);
-    
-    vec2 rectSize2 = vec2(0.7,0.4);
-    vec2 rectCenter2 = vec2(0.6,0.5);
-    float inRect2 = rectangle(uv,rectSize2,rectCenter2);
-   
-    // Rysowanie trójkąta
-    vec2 a1 = vec2(0.05,0.35);
-    vec2 b1 = vec2(0.25,0.7);
-    vec2 c1 = vec2(0.25,0.35);
-    float inTriangle1 = triangle(uv,a1,b1,c1);
-
-
 
     // Wyświetlanie - ustalenie koloru piksela
     vec3 color = vec3(0.0,0.0,0.0);
     
     color += vec3(1.0,0.0,0.0)* inRect1;
-    color += vec3(1.0,0.0,0.0)* inRect2;
-
-    color += vec3(0.0,1.0,0.0) * inCircle1;
-    color += vec3(0.0,1.0,0.0) * inCircle2;
-    
-    color += vec3(0.0,0.0,1.0) * inTriangle1;
 
     // Wyświetl pomocniczą siatkę
     color += vec3(0.5,0.5,0.5)* grid(uv, fragCoord);
